@@ -6,8 +6,9 @@ const { type } = require('os');
 
 
 app.use(express.static(path.join(__dirname,'./Homepage')))
+app.use(express.urlencoded({extended:false}));
 app.get('/',(req,res)=>{
-  res.sendFile(path.join(__dirname,'Homepage/index.html'))
+  res.sendFile(path.join(__dirname,'/index.html'))
 })
 app.get('/api/product',(req,res)=>{
  const newproduct=product.map((product)=>{
@@ -33,6 +34,12 @@ app.get('*',(req,res)=>{
     
    
   }) 
+  app.post('/login',(req,res)=>{
+  const {name}=req.body;
+  if(name) return res.status(200).send(name);
+  return res.status(401).send("please provide");
+
+  })
  
 app.listen(5000,()=>{
     console.log("running....")
